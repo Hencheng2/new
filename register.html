@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+    <form id="registerForm" action="login.html" method="post">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+      </div>
+
+      <div id="error" class="error"></div>
+
+      <button type="submit">Register</button>
+    </form>
+    <div class="links">
+      <a href="login.html">Back to Login</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const errorDiv = document.getElementById("error");
+
+    form.addEventListener("submit", function(event) {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+      if (!passwordPattern.test(password)) {
+        errorDiv.textContent = "Password must be 6+ chars, with letters, numbers & a special character.";
+        event.preventDefault();
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        errorDiv.textContent = "Passwords do not match.";
+        event.preventDefault();
+        return;
+      }
+
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const numbers = "0123456789";
+      const recoveryKey =
+        letters.charAt(Math.floor(Math.random() * letters.length)) +
+        letters.charAt(Math.floor(Math.random() * letters.length)) +
+        numbers.charAt(Math.floor(Math.random() * numbers.length)) +
+        numbers.charAt(Math.floor(Math.random() * numbers.length));
+
+      alert("✅ Registration successful! Your recovery key is: " + recoveryKey + "\nPlease save it safely.");
+    });
+  </script>
+</body>
+</html>
