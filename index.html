@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Stories container */
+    .stories {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .story {
+      text-align: center;
+      flex: 0 0 auto;
+    }
+
+    .story img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid #6a11cb;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .story p {
+      margin-top: 5px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    /* Story modal */
+    .story-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      color: white;
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      touch-action: none;
+    }
+
+    .story-modal img {
+      max-width: 100%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .story-modal .username {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Posts */
+    .posts {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .post {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .post-header img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid #6a11cb;
+      object-fit: cover;
+    }
+
+    .post-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-info .name {
+      font-weight: 600;
+    }
+
+    .post-info .username {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .post-description {
+      margin: 10px 0;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .post-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6a11cb;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="max-width: 700px; width: 100%;">
+    <!-- Stories -->
+    <div class="stories">
+      <div class="story" data-username="Alice" data-img="https://via.placeholder.com/400x600/6a11cb/fff?text=Alice+Story">
+        <img src="https://via.placeholder.com/70" alt="Alice">
+        <p>Alice</p>
+      </div>
+      <div class="story" data-username="Bob" data-img="https://via.placeholder.com/400x600/2575fc/fff?text=Bob+Story">
+        <img src="https://via.placeholder.com/70" alt="Bob">
+        <p>Bob</p>
+      </div>
+      <div class="story" data-username="Clara" data-img="https://via.placeholder.com/400x600/5410a5/fff?text=Clara+Story">
+        <img src="https://via.placeholder.com/70" alt="Clara">
+        <p>Clara</p>
+      </div>
+    </div>
+
+    <!-- Story Modal -->
+    <div class="story-modal" id="storyModal">
+      <img id="storyImage" src="" alt="Story">
+      <p class="username" id="storyUsername"></p>
+    </div>
+
+    <!-- Posts -->
+    <div class="posts">
+      <div class="post">
+        <div class="post-header">
+          <img src="https://via.placeholder.com/45" alt="Profile">
+          <div class="post-info">
+            <span class="name">Alice Johnson</span>
+            <span class="username">@alice · 2d</span>
+          </div>
+        </div>
+        <div class="post-description">
+          Enjoying a sunny day at the beach! 🌊☀️
+        </div>
+        <div class="post-actions">
+          <button>Like</button>
+          <button>Comment</button>
+          <button>Share</button>
+          <button>Save</button>
+          <button>Follow</button>
+          <button>Repost</button>
+          <button>Analytics</button>
+          <button>Report</button>
+          <button>Hide</button>
+          <button>Turn on Notifications</button>
+          <button>Block</button>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-header">
+          <img src="https://via.placeholder.com/45" alt="Profile">
+          <div class="post-info">
+            <span class="name">Bob Smith</span>
+            <span class="username">@bob · 5h</span>
+          </div>
+        </div>
+        <div class="post-description">
+          Just finished a new painting 🎨
+        </div>
+        <div class="post-actions">
+          <button>Like</button>
+          <button>Comment</button>
+          <button>Share</button>
+          <button>Save</button>
+          <button>Follow</button>
+          <button>Repost</button>
+          <button>Analytics</button>
+          <button>Report</button>
+          <button>Hide</button>
+          <button>Turn on Notifications</button>
+          <button>Block</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stories = document.querySelectorAll(".story");
+    const modal = document.getElementById("storyModal");
+    const storyImg = document.getElementById("storyImage");
+    const storyUsername = document.getElementById("storyUsername");
+
+    let currentStoryIndex = 0;
+    let storyList = [];
+
+    stories.forEach((story, index) => {
+      story.addEventListener("click", () => {
+        storyList = Array.from(stories);
+        currentStoryIndex = index;
+        openStory();
+      });
+    });
+
+    function openStory() {
+      const story = storyList[currentStoryIndex];
+      storyImg.src = story.getAttribute("data-img");
+      storyUsername.textContent = story.getAttribute("data-username");
+      modal.style.display = "flex";
+    }
+
+    function closeStory() {
+      modal.style.display = "none";
+    }
+
+    let startX, startY;
+
+    modal.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    modal.addEventListener("touchend", (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0 && currentStoryIndex < storyList.length - 1) {
+          currentStoryIndex++;
+          openStory();
+        } else if (diffX > 0 && currentStoryIndex > 0) {
+          currentStoryIndex--;
+          openStory();
+        }
+      } else {
+        if (diffY > 50) closeStory();
+      }
+    });
+  </script>
+</body>
+</html>
