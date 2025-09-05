@@ -189,6 +189,14 @@
             margin-top: 10px;
         }
         
+        .redirect-countdown {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #4a6bff;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -292,6 +300,10 @@
                 </p>
             </div>
             
+            <div class="redirect-countdown" id="redirectCountdown">
+                Redirecting to login page in <span id="countdown">5</span> seconds...
+            </div>
+            
             <div class="login-link">
                 <p>Already have an account? <a href="login.html">Login here</a></p>
             </div>
@@ -306,6 +318,8 @@
             const usernameInput = document.getElementById('username');
             const recoveryKeySection = document.getElementById('recoveryKeySection');
             const recoveryKeyElement = document.getElementById('recoveryKey');
+            const redirectCountdown = document.getElementById('redirectCountdown');
+            const countdownElement = document.getElementById('countdown');
             
             // Check password requirements in real-time
             passwordInput.addEventListener('input', checkPasswordRequirements);
@@ -322,6 +336,7 @@
                     const recoveryKey = generateRecoveryKey();
                     recoveryKeyElement.textContent = recoveryKey;
                     recoveryKeySection.style.display = 'block';
+                    redirectCountdown.style.display = 'block';
                     
                     // Scroll to recovery key
                     recoveryKeySection.scrollIntoView({ behavior: 'smooth' });
@@ -331,7 +346,19 @@
                     console.log('Recovery key:', recoveryKey);
                     
                     // Show success message
-                    alert('Registration successful! Please save your recovery key.');
+                    alert('Registration successful! Please save your recovery key. You will be redirected to the login page shortly.');
+                    
+                    // Start countdown for redirect
+                    let countdown = 5;
+                    const countdownInterval = setInterval(() => {
+                        countdown--;
+                        countdownElement.textContent = countdown;
+                        
+                        if (countdown <= 0) {
+                            clearInterval(countdownInterval);
+                            window.location.href = 'login.html';
+                        }
+                    }, 1000);
                 }
             });
             
